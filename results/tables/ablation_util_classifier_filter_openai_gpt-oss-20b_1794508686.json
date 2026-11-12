@@ -1,0 +1,12 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "defences": "classifier_filter",
+  "fsr": 0.0,
+  "falsely_suppressed": 0,
+  "total": 2,
+  "mean_ms": 11.63,
+  "median_ms": 11.63,
+  "p95_ms": 12.38,
+  "p99_ms": 12.45,
+  "std_ms": 0.84
+}

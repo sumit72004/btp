@@ -31,19 +31,47 @@ python quick_test.py
 ```
 
 ### 3. Run Experiments
+
+#### Baseline and Custom Defence Sweeps
 Execute a quick injection test without defences (baseline):
 ```bash
-python run_benchmark.py --model llama-3.1-8b-instant --defences none --quick
+python run_benchmark.py --model openai/gpt-oss-20b --defences none --quick
 ```
 
-Evaluate with Spotlighting and Boundary-Awareness defences:
+#### Systematic 6-Stage Defence Ablation Study (RQ3)
+Automatically evaluate across all 6 configurations (Baseline, Boundary, Spotlighting, Pre-Filter, In-Context, and Full Layered Suite):
 ```bash
-python run_benchmark.py --model llama-3.1-8b-instant --defences boundary_awareness,spotlighting
+# Live API benchmark
+python run_ablation.py --model openai/gpt-oss-20b
+
+# Fast smoke-test or offline simulation mode
+python run_ablation.py --model openai/gpt-oss-20b --quick --dry-run
 ```
 
-Evaluate across all 3 defences:
+#### Multi-Record Incident Summarization Benchmark (RQ1 / RQ2)
+Evaluate prompt-injection robustness against multi-record incident summaries:
 ```bash
-python run_benchmark.py --model llama-3.1-8b-instant --defences all
+# Baseline summarization injection
+python run_summarization_benchmark.py --model openai/gpt-oss-20b --defences none
+
+# Defended summarization injection
+python run_summarization_benchmark.py --model openai/gpt-oss-20b --defences all
+```
+
+#### Ingest and Partition Live VMware Testbed Logs
+Extract and label exported Zeek (`conn`, `http`, `dns`) and Suricata (`eve.json`) logs:
+```bash
+python data/import_vm_logs.py --raw-dir data/raw_logs
+```
+
+#### Generate Publication Figures and LaTeX Tables
+Generate publication-quality figures and double-column LaTeX tables for IEEE/ACM formats:
+```bash
+# High-DPI Figures (Ablation, Channel vulnerability, Security-Utility trade-off)
+python src/evaluation/generate_figures.py
+
+# Publication LaTeX Tables (\begin{table*} ... \end{table*})
+python src/evaluation/generate_latex_tables.py
 ```
 
 ---
@@ -88,17 +116,22 @@ To generate realistic live Zeek and Suricata logs from your Ubuntu VM:
 │   │   └── classifier_filter.py
 │   └── evaluation/          # Metrics (ISR, FSR, Latency, Significance)
 │       ├── metrics.py
-│       └── runner.py
+│       ├── runner.py
+│       ├── generate_figures.py
+│       └── generate_latex_tables.py
 ├── data/
 │   ├── sample_logs/         # Built-in sample Zeek and Suricata datasets
 │   ├── raw_logs/            # Exported VM logs
 │   ├── benign/              # Clean benign ground truth
-│   └── malicious/           # Clean attack ground truth
+│   ├── malicious/           # Clean attack ground truth
+│   └── import_vm_logs.py    # Scaled VM log parser & labeler
 ├── testbed/                 # VM setup and traffic simulation scripts
 ├── results/
-│   ├── tables/              # CSV and JSON benchmark results
+│   ├── tables/              # CSV, JSON, and LaTeX benchmark results
 │   └── figures/             # Generated plots and heatmaps
 ├── quick_test.py            # Quick verification script
 ├── run_benchmark.py         # Automated CLI experiment runner
+├── run_ablation.py          # 6-Stage defence ablation study runner
+├── run_summarization_benchmark.py # Incident summarization benchmark
 └── requirements.txt         # Project dependencies
 ```

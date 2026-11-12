@@ -3,7 +3,17 @@
 import argparse
 import os
 import sys
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+    # load_dotenv handled
+except ImportError:
+    if os.path.exists('.env'):
+        with open('.env', 'r', encoding='utf-8') as _env_f:
+            for _line in _env_f:
+                _line = _line.strip()
+                if _line and not _line.startswith('#') and '=' in _line:
+                    _k, _v = _line.split('=', 1)
+                    os.environ.setdefault(_k.strip(), _v.strip())
 
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 if hasattr(sys.stdout, "reconfigure"):
@@ -18,7 +28,7 @@ from data.sample_logs.loader import load_sample_dataset
 
 
 def main():
-    load_dotenv()
+    # load_dotenv handled
     parser = argparse.ArgumentParser(description="Evaluate Prompt Injection & Defences on Network Copilots")
     parser.add_argument("--model", type=str, default="openai/gpt-oss-20b",
                         help="Model to test (e.g. openai/gpt-oss-20b, qwen/qwen3.8-27b, openai/gpt-oss-120b)")

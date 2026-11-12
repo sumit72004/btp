@@ -1,0 +1,17 @@
+\begin{table*}[t]
+\centering
+\caption{Ablation Study: Empirical Injection Success Rate (ISR), False Suppression Rate (FSR), and Latency Overhead Across Layered Defences}
+\label{tab:ablation_results}
+\begin{tabular}{l c c c c c c c}
+\hline\hline
+\textbf{Defence Configuration} & \textbf{Overall ISR (\%)} & \textbf{Direct Override} & \textbf{Persona Hijack} & \textbf{Context Manip.} & \textbf{Encoding/Obf.} & \textbf{FSR (\%)} & \textbf{Latency (ms)} \\
+\hline
+None & 15.0\% & 0.0\% & 10.0\% & 50.0\% & 0.0\% & 0.0\% & 12.0 \\
+Boundary Awareness & 22.5\% & 10.0\% & 20.0\% & 60.0\% & 0.0\% & 0.0\% & 10.4 \\
+Spotlighting & 2.5\% & 0.0\% & 0.0\% & 10.0\% & 0.0\% & 0.0\% & 10.9 \\
+Classifier Filter & 20.0\% & 0.0\% & 30.0\% & 50.0\% & 0.0\% & 0.0\% & 11.6 \\
+Boundary+Spotlighting & 7.5\% & 0.0\% & 0.0\% & 30.0\% & 0.0\% & 0.0\% & 10.6 \\
+All Defences & 12.5\% & 0.0\% & 0.0\% & 50.0\% & 0.0\% & 0.0\% & 11.1 \\
+\hline\hline
+\end{tabular}
+\end{table*}

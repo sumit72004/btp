@@ -1,0 +1,12 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "defences": "boundary_awareness",
+  "fsr": 0.0,
+  "falsely_suppressed": 0,
+  "total": 2,
+  "mean_ms": 10.43,
+  "median_ms": 10.43,
+  "p95_ms": 10.55,
+  "p99_ms": 10.56,
+  "std_ms": 0.13
+}
